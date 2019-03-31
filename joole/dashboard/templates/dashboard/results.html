@@ -13,10 +13,43 @@
     </div>
 </div>
 
- -----> YOUR CODE HERE <-----
+<h3> Mes dépenses annuelles (en euros) </h3>
+<table class="table">
+<tr>
+	<td>Année</td>
+	<td>Coût Total</td>
+</tr>
+ 
+	{% for year, cost in annual_costs.items %}
+			<tr>
+				<td>{{year}}</td>
+				<td>{{cost}}</td>
+			</tr>
+	 {% endfor %}
+</table>
+
+<h3 class="mt-5">Ma consommation (en Watts) en 2017</h3>
+<div id="costChart" style="height: 250px;"></div>
+
+<h3>Chauffage électrique</h3>
+{% if is_elec_heating %}
+	Vous disposez d'un chauffage électrique
+{% else %}
+	
+	Vous ne disposez pas de chauffage électrique
+{% endif %}
+<h3>Dysfonctionnement</h3>
+ {% if dysfunction_detected%}
+	Nous avons détecté un dysfonctionnement dans votre installation
+{% else %}
+	
+	Nous n'avons détecté aucun dysfonctionnement
+{% endif %}
 
 {% endblock %}
 
 {% block script %}
+	<script>
+		var costData = JSON.parse('{{json_conso_watt |safe}}')	</script>
     <script src="{% static 'dashboard/js/results.js' %}"></script>
 {% endblock %}
